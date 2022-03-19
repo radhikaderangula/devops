@@ -1,0 +1,10 @@
+node('slave-node'){
+checkout scm
+stage('Building Image'){
+docker.withRegistry('https://registry.hu.docker.com','docker-hub'){
+def customImage=docker.build("radhikaderangula/devops")
+customImage.push()
+}
+}
+stage('Deploy'){
+sh '''docker run --name radhikaderangula/devops'''
